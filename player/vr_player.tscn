@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://player/vr_controller.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/vr_player.gd" type="Script" id=2]
+[ext_resource path="res://player/vr_hand.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/hand_anchor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/vr_hand_joint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/vr_glove.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/teleporter.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-openvr/OpenVRAction.gdns" type="Script" id=8]
+
+[sub_resource type="CapsuleShape" id=1]
+resource_local_to_scene = true
+radius = 0.2
+height = 1.4
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.1
+
+[sub_resource type="Animation" id=3]
+resource_name = "RESET"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("OutOfBoundsPlayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.101961, 0.101961, 0.101961, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "out_of_bounds"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("OutOfBoundsPlayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.101961, 0.101961, 0.101961, 0 ), Color( 0.101961, 0.101961, 0.101961, 1 ) ]
+}
+
+[node name="VRPlayer" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="KinematicBody" type="KinematicBody" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0 )
+shape = SubResource( 1 )
+
+[node name="ARVROrigin" type="ARVROrigin" parent="KinematicBody"]
+
+[node name="Camera" type="ARVRCamera" parent="KinematicBody/ARVROrigin"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
+cull_mask = 1048063
+
+[node name="BoundsCheck" type="Area" parent="KinematicBody/ARVROrigin/Camera"]
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="KinematicBody/ARVROrigin/Camera/BoundsCheck"]
+shape = SubResource( 2 )
+
+[node name="LeftController" parent="KinematicBody/ARVROrigin" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1, 0 )
+
+[node name="Teleporter" parent="KinematicBody/ARVROrigin/LeftController" instance=ExtResource( 7 )]
+
+[node name="RightController" parent="KinematicBody/ARVROrigin" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1, 0 )
+controller_id = 2
+
+[node name="Teleporter" parent="KinematicBody/ARVROrigin/RightController" instance=ExtResource( 7 )]
+
+[node name="LeftHandAnchor" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1, 0 )
+controller = NodePath("../KinematicBody/ARVROrigin/LeftController")
+
+[node name="LeftHandJoint" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1, 0 )
+nodes/node_a = NodePath("../LeftHandAnchor")
+nodes/node_b = NodePath("../LeftHand")
+
+[node name="LeftHand" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1, 0 )
+controller = NodePath("../KinematicBody/ARVROrigin/LeftController")
+
+[node name="VRGlove" parent="LeftHand" instance=ExtResource( 6 )]
+
+[node name="RightHandAnchor" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1, 0 )
+controller = NodePath("../KinematicBody/ARVROrigin/RightController")
+
+[node name="RightHandJoint" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1, 0 )
+nodes/node_a = NodePath("../RightHandAnchor")
+nodes/node_b = NodePath("../RightHand")
+
+[node name="RightHand" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1, 0 )
+controller = NodePath("../KinematicBody/ARVROrigin/RightController")
+
+[node name="VRGlove" parent="RightHand" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="Actions" type="Spatial" parent="."]
+
+[node name="TeleportLeftAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/teleport"
+on_hand = 1
+
+[node name="TeleportRightAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/teleport"
+on_hand = 2
+
+[node name="TurnLeftAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/turn_left"
+
+[node name="TurnRightAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/turn_right"
+
+[node name="GrabLeftAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/grab"
+on_hand = 1
+
+[node name="GrabRightAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/grab"
+on_hand = 2
+
+[node name="WalkForwardAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/walk_forward"
+
+[node name="WalkBackwardAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/walk_backward"
+
+[node name="WalkLeftAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/walk_left"
+
+[node name="WalkRightAction" type="Spatial" parent="Actions"]
+script = ExtResource( 8 )
+pressed_action = "/actions/godot/in/walk_right"
+
+[node name="OutOfBoundsPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/out_of_bounds = SubResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="OutOfBoundsPlayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.101961, 0.101961, 0.101961, 0 )
+
+[connection signal="body_entered" from="KinematicBody/ARVROrigin/Camera/BoundsCheck" to="." method="_on_bounds_check_body_entered"]
+[connection signal="body_exited" from="KinematicBody/ARVROrigin/Camera/BoundsCheck" to="." method="_on_bounds_check_body_exited"]
+[connection signal="teleported" from="KinematicBody/ARVROrigin/LeftController/Teleporter" to="." method="_on_teleporter_teleported"]
+[connection signal="teleported" from="KinematicBody/ARVROrigin/RightController/Teleporter" to="." method="_on_teleporter_teleported"]
+[connection signal="pressed" from="Actions/TeleportLeftAction" to="." method="_on_teleport_left_action_pressed"]
+[connection signal="released" from="Actions/TeleportLeftAction" to="." method="_on_teleport_left_action_released"]
+[connection signal="pressed" from="Actions/TeleportRightAction" to="." method="_on_teleport_right_action_pressed"]
+[connection signal="released" from="Actions/TeleportRightAction" to="." method="_on_teleport_right_action_released"]
+[connection signal="pressed" from="Actions/TurnLeftAction" to="." method="_on_turn_left_action_pressed"]
+[connection signal="pressed" from="Actions/TurnRightAction" to="." method="_on_turn_right_action_pressed"]
+[connection signal="pressed" from="Actions/GrabLeftAction" to="." method="_on_grab_left_action_pressed"]
+[connection signal="released" from="Actions/GrabLeftAction" to="." method="_on_grab_left_action_released"]
+[connection signal="pressed" from="Actions/GrabRightAction" to="." method="_on_grab_right_action_pressed"]
+[connection signal="released" from="Actions/GrabRightAction" to="." method="_on_grab_right_action_released"]
+[connection signal="pressed" from="Actions/WalkForwardAction" to="." method="_on_walk_forward_action_pressed"]
+[connection signal="released" from="Actions/WalkForwardAction" to="." method="_on_walk_forward_action_released"]
+[connection signal="pressed" from="Actions/WalkBackwardAction" to="." method="_on_walk_backward_action_pressed"]
+[connection signal="released" from="Actions/WalkBackwardAction" to="." method="_on_walk_backward_action_released"]
+[connection signal="pressed" from="Actions/WalkLeftAction" to="." method="_on_walk_left_action_pressed"]
+[connection signal="released" from="Actions/WalkLeftAction" to="." method="_on_walk_left_action_released"]
+[connection signal="pressed" from="Actions/WalkRightAction" to="." method="_on_walk_right_action_pressed"]
+[connection signal="released" from="Actions/WalkRightAction" to="." method="_on_walk_right_action_released"]
+[connection signal="animation_finished" from="OutOfBoundsPlayer" to="." method="_on_out_of_bounds_player_animation_finished"]

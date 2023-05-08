@@ -1,0 +1,280 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://demo/demo_room.gd" type="Script" id=1]
+[ext_resource path="res://player/vr_player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://demo/block.tscn" type="PackedScene" id=3]
+[ext_resource path="res://demo/pinwheel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/rotating_door.tscn" type="PackedScene" id=5]
+[ext_resource path="res://demo/desk.tscn" type="PackedScene" id=6]
+[ext_resource path="res://demo/meshes/interior_walls.mesh" type="ArrayMesh" id=7]
+[ext_resource path="res://demo/meshes/courtyard_walls.mesh" type="ArrayMesh" id=8]
+[ext_resource path="res://demo/materials/bricks.tres" type="Material" id=9]
+[ext_resource path="res://demo/meshes/doorframe.mesh" type="ArrayMesh" id=10]
+[ext_resource path="res://demo/meshes/shadow_caster.mesh" type="ArrayMesh" id=11]
+[ext_resource path="res://demo/wall_lamp.tscn" type="PackedScene" id=12]
+[ext_resource path="res://demo/giprobedata.res" type="GIProbeData" id=13]
+[ext_resource path="res://demo/materials/floor.tres" type="Material" id=14]
+[ext_resource path="res://demo/materials/grass.tres" type="Material" id=15]
+[ext_resource path="res://demo/environment.tres" type="Environment" id=16]
+[ext_resource path="res://demo/ball.tscn" type="PackedScene" id=17]
+[ext_resource path="res://demo/materials/wall.tres" type="Material" id=18]
+[ext_resource path="res://football goal.obj" type="ArrayMesh" id=19]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 2, 0.1, 2.1 )
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 4, 4.1 )
+
+[sub_resource type="PlaneMesh" id=3]
+flip_faces = true
+size = Vector2( 4, 4 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 2.1, 1.6, 0.1 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 2.6, 2, 0.05 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.5, 0.9, 0.05 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 4.41072, 0.1, 1.97529 )
+
+[sub_resource type="PlaneMesh" id=8]
+size = Vector2( 10, 10 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 5.2, 2, 0.1 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.5, 0.025, 0.1 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.025, 1.12, 0.1 )
+
+[node name="SkyRoom" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="VRPlayer" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+
+[node name="Block1" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.73, -2.415 )
+
+[node name="Block2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.725, 0.73, -2.415 )
+
+[node name="Block3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0.73, -2.48 )
+
+[node name="Block4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0.79, -2.45 )
+
+[node name="Block5" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.63, -2.88 )
+
+[node name="Block6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53, 0.63, -2.97 )
+
+[node name="Pinwheel1" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 1.4, -1 )
+
+[node name="Pinwheel2" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 1.8, -1.6 )
+
+[node name="RotatingDoor" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 1, -0.05 )
+
+[node name="Ball1" parent="." instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 4 )
+
+[node name="Ball2" parent="." instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 5 )
+
+[node name="Ball3" parent="." instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.6, 4.5 )
+
+[node name="Desk" parent="." instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.96, 0, -2.5 )
+
+[node name="Interior" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.1 )
+
+[node name="Walls" type="MeshInstance" parent="Interior"]
+use_in_baked_light = true
+mesh = ExtResource( 7 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 18 )
+
+[node name="FloorShape" type="CollisionShape" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
+shape = SubResource( 1 )
+
+[node name="CeilingShape" type="CollisionShape" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, 0 )
+shape = SubResource( 1 )
+
+[node name="FloorMesh" type="MeshInstance" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05 )
+use_in_baked_light = true
+mesh = SubResource( 2 )
+material/0 = ExtResource( 14 )
+
+[node name="CeilingMesh" type="MeshInstance" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+use_in_baked_light = true
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="BackWall" type="CollisionShape" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.1 )
+shape = SubResource( 4 )
+
+[node name="LeftWall" type="CollisionShape" parent="Interior"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.1, 1.5, 0 )
+shape = SubResource( 4 )
+
+[node name="RightWall" type="CollisionShape" parent="Interior"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.1, 1.5, 0 )
+shape = SubResource( 4 )
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="Interior"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+max_distance = 4.0
+extents = Vector3( 2.1, 1.6, 2.07 )
+box_projection = true
+enable_shadows = true
+cull_mask = 3
+interior_enable = true
+interior_ambient_color = Color( 0.447059, 0.447059, 0.447059, 1 )
+
+[node name="Courtyard" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+
+[node name="BackWall1" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 2, -5.05 )
+shape = SubResource( 5 )
+
+[node name="BackWall2" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 2, -5.05 )
+shape = SubResource( 5 )
+
+[node name="BackWall3" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.1, -5.05 )
+shape = SubResource( 6 )
+
+[node name="Walls" type="MeshInstance" parent="Courtyard"]
+transform = Transform( 0.993286, 0, 0, 0, 0.993286, 0, 0, 0, 2.71477, 0, 0, 8.6036 )
+use_in_baked_light = true
+mesh = ExtResource( 8 )
+material/0 = ExtResource( 9 )
+
+[node name="GroundShape" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 4.41262, 0, -0.1, 0 )
+shape = SubResource( 7 )
+
+[node name="GroundShape2" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 0.331962, 0, 0, 0, 1, 0, 0, 0, 0.531883, -0.0110743, 2.11303, 18.0299 )
+shape = SubResource( 7 )
+
+[node name="GroundShape3" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 0.298706, 0, 0, 0, 0.553076, -0.980583, 0, 0.838407, 0.5263, -0.0397626, 1.13847, 19.0162 )
+shape = SubResource( 7 )
+
+[node name="GroundShape4" type="CollisionShape" parent="Courtyard"]
+transform = Transform( -0.000226954, -0.999998, 0, 0.247854, -0.00463215, 0, 0, 0, 0.601235, -1.64409, 1.14671, 18.5632 )
+shape = SubResource( 7 )
+
+[node name="GroundShape5" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 0.00120435, 0.247831, 0.00128076, -0.247854, 0.00485911, 1.58568e-08, -6.42047e-06, -0.00132457, 0.545288, 1.53894, 1.09147, 18.5726 )
+shape = SubResource( 7 )
+
+[node name="GroundMesh" type="MeshInstance" parent="Courtyard"]
+process_priority = 2
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3.16536, 0, 0, 10.725 )
+use_in_baked_light = true
+mesh = SubResource( 8 )
+material/0 = ExtResource( 15 )
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8.51638 )
+max_distance = 7.0
+extents = Vector3( 5.1, 2.1, 13.565 )
+box_projection = true
+enable_shadows = true
+cull_mask = 3
+
+[node name="FrontWall" type="CollisionShape" parent="Courtyard"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 22.2698 )
+shape = SubResource( 11 )
+
+[node name="LeftWall" type="CollisionShape" parent="Courtyard"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -4.26795, 0, -1.86558e-07, 5.1, 2, 4.76837e-07 )
+shape = SubResource( 11 )
+
+[node name="RightWall" type="CollisionShape" parent="Courtyard"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -4.30089, 0, -1.87998e-07, -5.1, 2, 0 )
+shape = SubResource( 11 )
+
+[node name="Doorframe" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.05 )
+
+[node name="Mesh" type="MeshInstance" parent="Doorframe"]
+use_in_baked_light = true
+mesh = ExtResource( 10 )
+
+[node name="Top" type="CollisionShape" parent="Doorframe"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.225, 0 )
+shape = SubResource( 9 )
+
+[node name="Left" type="CollisionShape" parent="Doorframe"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.475, 1.12, 0 )
+shape = SubResource( 10 )
+
+[node name="Right" type="CollisionShape" parent="Doorframe"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.475, 1.12, 0 )
+shape = SubResource( 10 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.766044, 0.556671, -0.321394, 0, 0.5, 0.866026, 0.642788, 0.663414, -0.383022, -5.30522, 8.12675, 16.1072 )
+light_energy = 2.468
+light_indirect_energy = 0.266
+shadow_enabled = true
+shadow_bias = 0.01
+
+[node name="ShadowCaster" type="MeshInstance" parent="."]
+transform = Transform( 1.0009, 0, 0, 0, 1.0009, 0, 0, 0, 2.69617, 0, 0, 0 )
+cast_shadow = 3
+use_in_baked_light = true
+generate_lightmap = false
+mesh = ExtResource( 11 )
+
+[node name="WallLamp1" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.9, -4.1 )
+
+[node name="WallLamp2" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.9, -4.1 )
+
+[node name="GIProbe" type="GIProbe" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 14.5637 )
+extents = Vector3( 5.1, 2.1, 19.1065 )
+data = ExtResource( 13 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 16 )
+
+[node name="HingeJoint" type="HingeJoint" parent="."]
+transform = Transform( -3.14315e-06, 1, 3.14315e-06, 0, -3.14315e-06, 1, 1, 3.14315e-06, 9.87941e-12, 0.05, 1.1, -0.05 )
+nodes/node_a = NodePath("../Doorframe")
+nodes/node_b = NodePath("../RotatingDoor")
+angular_limit/enable = true
+angular_limit/upper = 120.0
+angular_limit/lower = -120.0
+
+[node name="football goal" type="MeshInstance" parent="."]
+transform = Transform( 0.00631137, 0, 0, 0, 0.0105141, 0, 0, 0, 0.0120461, -1.64042, 0.00431824, 23.4004 )
+mesh = ExtResource( 19 )
+
+[connection signal="bounds_escaped" from="VRPlayer" to="." method="_on_vr_player_bounds_escaped"]
